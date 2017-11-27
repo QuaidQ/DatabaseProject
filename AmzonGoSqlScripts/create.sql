@@ -1,0 +1,9 @@
+\. createDB.sql
+\. creatTable.sql
+\. createtriggers.sql
+\. insertStore.sql
+\. insertItems.sql
+\. insertStoreInv.sql
+\. insertShipCenter.sql
+\. insertCustomers.sql
+\. insertemployee.sql
