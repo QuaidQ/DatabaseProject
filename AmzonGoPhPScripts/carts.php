@@ -1,18 +1,7 @@
 <?php
   //error_reporting(0);
   include('session.php');
-  //session_start();
-  include("item.php");
-  //$id = $_GET['id'];
-  //$query = 'select * from item where Itemno = '.$id;
-  //$result = mysqli_query($db,$query);
-  //$product = mysqli_fetch_object($result);
-  //$qty = "select * from storeinventory where storeNO = $StoreNo_session and InventoryId =".$id;
-  //$test = mysqli_query($db,$qty);
-  //$quant = mysqli_fetch_object($test);
-  //echo $quant->InventoryQuantity;
-  //echo "my id".$id;
-  //echo "my id name".$product->ItemName;
+ 
 
   if(isset($_GET['id'])){
     $id = $_GET['id'];
