@@ -1,7 +1,15 @@
-/* join tables based on ID and StoreNO, will be used when customer at a store is  looking at the inventory to buy items */
+#Show Inventory of Store 1
+SELECT ITEM.*, InventoryQuantity FROM ITEM LEFT JOIN STOREINVENTORY
+	ON ITEM.Itemno = STOREINVENTORY.InventoryId
+WHERE storeNo = 1;
 
-select item.*, storeinventory.*
-from item, storeinventory
-where item.itemno = storeinventory.inventoryid and storeNO=1'
+#Show Inventory of Store 2
+SELECT ITEM.*, InventoryQuantity FROM ITEM LEFT JOIN STOREINVENTORY
+	ON ITEM.Itemno = STOREINVENTORY.InventoryId
+WHERE storeNo = 2;
 
+#Show Inventory of Store 3
+SELECT ITEM.*, InventoryQuantity FROM ITEM LEFT JOIN STOREINVENTORY
+	ON ITEM.Itemno = STOREINVENTORY.InventoryId
+WHERE storeNo = 3;
 
