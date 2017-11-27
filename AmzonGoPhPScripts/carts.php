@@ -1,41 +1,61 @@
 <?php
-  include("session.php");
+  //error_reporting(0);
+  include('session.php');
+  //session_start();
   include("item.php");
-  $id = $_GET['id'];
-  $query = 'select * from item where Itemno = '.$id;
-  $result = mysqli_query($db,$query);
-  $product = mysqli_fetch_object($result);
-  echo "my id".$id;
-  echo "my id name".$product->ItemName;
+  //$id = $_GET['id'];
+  //$query = 'select * from item where Itemno = '.$id;
+  //$result = mysqli_query($db,$query);
+  //$product = mysqli_fetch_object($result);
+  //$qty = "select * from storeinventory where storeNO = $StoreNo_session and InventoryId =".$id;
+  //$test = mysqli_query($db,$qty);
+  //$quant = mysqli_fetch_object($test);
+  //echo $quant->InventoryQuantity;
+  //echo "my id".$id;
+  //echo "my id name".$product->ItemName;
 
-  if(isset($id)){
-    $item = new Item();
-    $item->id = $product->Itemno;
-    $item->name = $product->ItemName;
-    $item->price = $product->Price;
-    $item->quantity = 1;
-    $_SESSION['cart'][] = $item;
+  if(isset($_GET['id'])){
+    $id = $_GET['id'];
+    //$qty = "select * from storeinventory where storeNO = $StoreNo_session and InventoryId =".$id;
+  //  $quant = mysqli_query($db,$qty);
+    //while ($quantity = mysqli_fetch_assoc($quant)){
+    //  if($quantity['InventoryQuantity'] != $_SESSION['cart'.$id]){
+        $_SESSION['cart_'.(int)$id] += '1';
+    //  }
+  //  }
   }
+
+  if(isset($_GET['remove'])){
+    $_SESSION['cart_'.(int)$_GET['remove']] --;
+  }
+
+  if(isset($_GET['add'])){
+    $_SESSION['cart_'.(int)$_GET['add']] ++;
+  }
+
+  if(isset($_GET['delete'])){
+    $_SESSION['cart_'.(int)$_GET['delete']] ='0';
+  }
+  function cart($db){
+    foreach($_SESSION as $name => $value){
+      if($value>0){
+        if(substr($name, 0, 5) == 'cart_'){
+          $ids = substr($name, 5,(strlen($name) - 5));
+          $get = 'select * from item where Itemno = '.$ids;
+          $result = mysqli_query($db,$get);
+          while($get_row = mysqli_fetch_assoc($result)){
+            $sub = $get_row['Price'] *$value;
+            echo $get_row['ItemName'].' x '.$value.' @ $'.$get_row['Price'].' = $'. $sub.'<a href="?remove='.$ids.'">[-]</a> <a href="?add='.$ids.'">[+]</a> <a href="?delete='.$ids.'">[Delete]</a><br />';
+          }
+
+        }
+      }
+      else{
+      }
+    }
+    echo '<td><input id="button" type="submit" name="submit" value="Purchase"></td>';
+
+  }
+  echo "Your Shopping Cart<br />";
+  cart($db);
 ?>
-<table cellpadding="2" cellspacing="2" border="0">
-  <tr>
-    <th>Id</th>
-    <th>Name</th>
-    <th>Price</th>
-    <th>Type</th>
-    <th>Quantity</th>
-    <th>SubTotal</th>
-  </tr>
-  <?php
-    $cart = $_SESSION['cart'];
-    for($i=0; $i<count($cart); $i++){
-  ?>
-    <tr>
-      <td><? php echo $cart[$i]->id; ?></td>
-      <td><? php echo $cart[$i]->name; ?></td>
-      <td><? php echo $cart[$i]->price; ?></td>
-      <td><? php echo $cart[$i]->quantiy; ?></td>
-      <td><? php echo $cart[$i]->price * $cart[$i]->quantity; ?></td>
-    </tr>
-<?php } ?>
-</table>

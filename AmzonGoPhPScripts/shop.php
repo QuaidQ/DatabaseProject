@@ -17,7 +17,7 @@ $result = mysqli_query($db,$query);
     <tr>
       <td><?php echo $product['Itemno'] ?></td>
       <td><?php echo $product['ItemName'] ?></td>
-      <td><?php echo $product['Price'] ?></td>
+      <td>$<?php echo $product['Price'] ?></td>
       <td><?php echo $product['ItemType'] ?></td>
       <td><?php echo $product['InventoryQuantity'] ?></td>
       <td><a href="carts.php?id=<?php echo $product['Itemno']?>">Add to Cart</a></td>
