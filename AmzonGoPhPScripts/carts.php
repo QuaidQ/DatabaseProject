@@ -1,5 +1,5 @@
 <?php
-  //error_reporting(0);
+  error_reporting(0);
   include('session.php');
  
 
@@ -42,9 +42,14 @@
       else{
       }
     }
-    echo '<td><input id="button" type="submit" name="submit" value="Purchase"></td>';
+    echo '<br />';
+    echo '<td><input id="button" type="submit" name="submit" value="Purchase"></td><br />';
+    echo '<br />';
+    echo '<td><a href="shop.php"><-------Continue Shopping</a> </td><br />';
 
   }
+  echo '<td><a href="home.php">[Home]</a> </td><br />';
+  echo '<br />';
   echo "Your Shopping Cart<br />";
   cart($db);
 ?>
