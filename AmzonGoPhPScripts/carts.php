@@ -4,6 +4,7 @@
   $store = $StoreNo_session;
   $cust = $login_session;
   $total = '0';
+  $submitted = (isset($_POST['submit'])) ? true : false;
   if(isset($_GET['id'])){
     $id = $_GET['id'];
     $_SESSION['cart_'.(int)$id] += '1';
@@ -30,9 +31,10 @@
           $result = mysqli_query($db,$get);
           while($get_row = mysqli_fetch_assoc($result)){
             $sub = $get_row['Price'] *$value;
-            echo $get_row['ItemName'].' x '.$value.' @ $'.$get_row['Price'].' = $'. $sub.'<a href="?remove='.$ids.'">[-]</a> <a href="?add='.$ids.'">[+]</a> <a href="?delete='.$ids.'">[Delete]</a><br />';
+            //echo $get_row['ItemName'].' x '.$value.' @ $'.$get_row['Price'].' = $'. $sub.'<a href="?remove='.$ids.'">[-]</a> <a href="?add='.$ids.'">[+]</a> <a href="?delete='.$ids.'">[Delete]</a><br />';
           }
-          /*if(isset($_POST['submit'])){
+          echo $get_row['ItemName'].' x '.$value.' @ $'.$get_row['Price'].' = $'. $sub.'<a href="?remove='.$ids.'">[-]</a> <a href="?add='.$ids.'">[+]</a> <a href="?delete='.$ids.'">[Delete]</a><br />';
+          if(isset($_POST['submit'])){
             $update = "UPDATE storeinventory set InventoryQuantity = InventoryQuantity - '$value' where storeNO = '$store' and InventoryId ='$ids'";
             $stmt = $db->prepare($update);
             $stmt->execute();
@@ -41,23 +43,25 @@
             $stmt2->execute();
             header("location: purchased.php");
 
-          }*/
+          }
 
         }
         $total += $sub;
 
 
       }
-      if(isset($_POST['submit'])){
+      /*if(isset($_POST['submit'])){
             $update = "UPDATE storeinventory set InventoryQuantity = InventoryQuantity - '$value' where storeNO = '$store' and InventoryId ='$ids'";
             $stmt = $db->prepare($update);
             $stmt->execute();
+          if($stmt->execute()){
             $order = "INSERT into customerorder(TotalPrice, Cust) values('$total', '$cust')";
             $stmt2 = $db->prepare($order);
             $stmt2->execute();
+          }
             header("location: purchased.php");
 
-          }
+          }*/
 
 
     }
@@ -70,7 +74,7 @@
   echo '<br />';
   echo "Your Shopping Cart<br />";
   cart($db, $store, $cust);
-  
+
 ?>
 <!DOCTYPE HTML>
 <html>
