@@ -3,6 +3,7 @@
   include('session.php');
   $store = $StoreNo_session;
   $cust = $login_session;
+  $total = '0';
   if(isset($_GET['id'])){
     $id = $_GET['id'];
     $_SESSION['cart_'.(int)$id] += '1';
@@ -34,67 +35,35 @@
 
         }
         $total += $sub;
-        /*if(isset($_POST['submit'])){
-            $update = "UPDATE storeinventory set InventoryQuantity = InventoryQuantity - '$value' where storeNO = '$store' and InventoryId ='$ids'";
-            $stmt = $db->prepare($update);
-            $stmt->execute();
-            $order = "INSERT into customerorder(TotalPrice, Cust) values('$total', '$cust')";
-            $stmt2 = $db->prepare($order);
-            $stmt2->execute();
-            $sql = "SELECT * from customerorder where Cust ='$cust'";
-            $grab = mysqli_query($db,$sql);
-            $product = mysqli_fetch_assoc($grab);
-            if($product){
-              $sql2 = "SELECT * from item where Itemno = '$ids'";
-              $stmt3 = mysqli_query($db,$sql2);
-              $items = mysqli_fetch_assoc($stmt3);
-              $name = $items['ItemName'];
-              $Onum = $product['Orderno'];
-              $price = $items['Price'];
-              $order2 = "INSERT into ordereditems(orderno,itemid,Iname,quantity, price) values('$Onum', '$ids', '$name','$value','$price')";
-              $stmt4 = $db->prepare($order2);
-              $stmt4->execute();
-          }
-          header("location: purchased.php");
 
-        }*/
 
       }
-
-    }
-    echo '<br />';
-    echo "Cart Total   $ $total<br />";
-    echo '<br />';
-    if(isset($_POST['submit'])){
+      if(isset($_POST['submit'])){
         $update = "UPDATE storeinventory set InventoryQuantity = InventoryQuantity - '$value' where storeNO = '$store' and InventoryId ='$ids'";
         $stmt = $db->prepare($update);
         $stmt->execute();
-        $order = "INSERT into customerorder(TotalPrice, Cust) values('$total', '$cust')";
-        $stmt2 = $db->prepare($order);
-        $stmt2->execute();
-        /*$sql = "SELECT * from customerorder where Cust ='$cust'";
-        $grab = mysqli_query($db,$sql);
-        $product = mysqli_fetch_assoc($grab);
-        if($product){
-          $sql2 = "SELECT * from item where Itemno = '$ids'";
-          $stmt3 = mysqli_query($db,$sql2);
-          $items = mysqli_fetch_assoc($stmt3);
-          $name = $items['ItemName'];
-          $Onum = $product['Orderno'];
-          $price = $items['Price'];
-          $order2 = "INSERT into ordereditems(orderno,itemid,Iname,quantity, price) values('$Onum', '$ids', '$name','$value','$price')";
-          $stmt4 = $db->prepare($order2);
-          $stmt4->execute();
-      }*/
-      header("location: purchased.php");
+      //  $order = "INSERT into customerorder(TotalPrice, Cust) values('$total', '$cust')";
+      //  $stmt2 = $db->prepare($order);
+      //  $stmt2->execute();
+        header("location: purchased.php");
+
+      }
+
+
 
     }
+
+    echo '<br />';
+    echo "Cart Total   $ $total<br />";
+    echo '<br />';
+
 
   }
   echo '<td><a href="home.php">[Home]</a> </td><br />';
   echo '<br />';
   echo "Your Shopping Cart<br />";
   cart($db, $store, $cust);
+  
 ?>
 <!DOCTYPE HTML>
 <html>
