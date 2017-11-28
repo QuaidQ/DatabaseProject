@@ -7,6 +7,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 create table Stocker(
 	EmpID int(9) primary key,
+	StockId int(9) unique key auto_increment,
 	Fname varchar(25),
 	Minit varchar(1), 
 	Lname varchar(25), 
@@ -17,6 +18,7 @@ create table Stocker(
 
 create table CustomerService(
         EmpID int(9) primary key,
+        ServiceId int(9) unique key auto_increment,
         Fname varchar(25),
 	Minit varchar(1), 
         Lname varchar(25),       
@@ -27,6 +29,7 @@ create table CustomerService(
 
 create table ShippingEmp(
         EmpID int(9) primary key,
+        ShipId int(9) unique key auto_increment,
         Fname varchar(25), 
 	Minit varchar(1),
         Lname varchar(25),       
@@ -42,14 +45,14 @@ create trigger employ after insert on employee
 for each row
 begin
 	if new.Title = 'Stocker' then 
-		insert into stocker
+		insert into stocker(EmpID, Fname, Minit, Lname, Title, Wage, StoreNo)
 		values(new.empID, new.Fname, new.Minit, new.Lname, new.Title,new.Wage, new.StoreNo);
 	elseif new.Title = 'Customer Service' then
-		insert into customerservice
+		insert into customerservice(EmpID, Fname, Minit, Lname, Title, Wage, StoreNo)
 		values(new.empID, new.Fname,new.Minit, new.Lname,new.Title,new.Wage, new.StoreNo);
 	elseif new.Title = 'Shipping' then
-		insert into shippingemp 
-		values(new.empID, new.Fname,new.Minit, new.Lname,new.Title,new.Wage, new.StoreNo);
+		insert into shippingemp  (EmpID, Fname, Minit, Lname, Title, Wage, StoreNo)
+		values(new.empID,new.Fname,new.Minit, new.Lname,new.Title,new.Wage, new.StoreNo);
 	end if;
 end; //
 delimiter ;
