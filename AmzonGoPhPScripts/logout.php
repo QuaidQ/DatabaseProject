@@ -2,6 +2,6 @@
    session_start();
 
    if(session_destroy()) {
-      header("Location: Clogin.php");
+      header("Location: main.php");
    }
 ?>
