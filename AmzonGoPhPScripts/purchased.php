@@ -10,7 +10,7 @@
 
    <body>
       <h1>YOU COMPLETED YOUR PURCHASE!!</h1>
-      <li><a href="<?php echo "home.php";?>"> Home </a></li>
+      <li><a href="<?php echo "logout.php";?>"> Exit Store </a></li>
    </body>
 
 </html>

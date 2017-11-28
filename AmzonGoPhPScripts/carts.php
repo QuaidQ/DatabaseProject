@@ -3,8 +3,6 @@
   include('session.php');
   $store = $StoreNo_session;
   $cust = $login_session;
-  $total = '0';
-  $submitted = (isset($_POST['submit'])) ? true : false;
   if(isset($_GET['id'])){
     $id = $_GET['id'];
     $_SESSION['cart_'.(int)$id] += '1';
@@ -29,39 +27,24 @@
           $ids = substr($name, 5,(strlen($name) - 5));
           $get = 'select * from item where Itemno = '.$ids;
           $result = mysqli_query($db,$get);
-          while($get_row = mysqli_fetch_assoc($result)){
+          if($get_row = mysqli_fetch_assoc($result)){
             $sub = $get_row['Price'] *$value;
-            //echo $get_row['ItemName'].' x '.$value.' @ $'.$get_row['Price'].' = $'. $sub.'<a href="?remove='.$ids.'">[-]</a> <a href="?add='.$ids.'">[+]</a> <a href="?delete='.$ids.'">[Delete]</a><br />';
+            echo $get_row['ItemName'].' x '.$value.' @ $'.$get_row['Price'].' = $'. $sub.'<a href="?remove='.$ids.'">[-]</a> <a href="?add='.$ids.'">[+]</a> <a href="?delete='.$ids.'">[Delete]</a><br />';
           }
-          echo $get_row['ItemName'].' x '.$value.' @ $'.$get_row['Price'].' = $'. $sub.'<a href="?remove='.$ids.'">[-]</a> <a href="?add='.$ids.'">[+]</a> <a href="?delete='.$ids.'">[Delete]</a><br />';
-          if(isset($_POST['submit'])){
-            $update = "UPDATE storeinventory set InventoryQuantity = InventoryQuantity - '$value' where storeNO = '$store' and InventoryId ='$ids'";
-            $stmt = $db->prepare($update);
-            $stmt->execute();
-            $order = "INSERT into customerorder(TotalPrice, Cust) values('$total', '$cust')";
-            $stmt2 = $db->prepare($order);
-            $stmt2->execute();
-            header("location: purchased.php");
-
-          }
-
+          //echo $get_row['ItemName'].' x '.$value.' @ $'.$get_row['Price'].' = $'. $sub.'<a href="?remove='.$ids.'">[-]</a> <a href="?add='.$ids.'">[+]</a> <a href="?delete='.$ids.'">[Delete]</a><br />';
         }
         $total += $sub;
 
 
       }
-      /*if(isset($_POST['submit'])){
-            $update = "UPDATE storeinventory set InventoryQuantity = InventoryQuantity - '$value' where storeNO = '$store' and InventoryId ='$ids'";
-            $stmt = $db->prepare($update);
-            $stmt->execute();
-          if($stmt->execute()){
-            $order = "INSERT into customerorder(TotalPrice, Cust) values('$total', '$cust')";
-            $stmt2 = $db->prepare($order);
-            $stmt2->execute();
-          }
-            header("location: purchased.php");
+      if(isset($_POST['submit'])){
+        $update = "UPDATE storeinventory set InventoryQuantity = InventoryQuantity - '$value' where storeNO = '$store' and InventoryId ='$ids'";
+        $stmt = $db->prepare($update);
+        $stmt->execute();
+        $count = count($stmt->execute());
+        header("location: purchased.php");
 
-          }*/
+      }
 
 
     }
