@@ -68,6 +68,14 @@ create table employee(
 	Wage int(6), 
 	storeNo int(1),
 	foreign key fk_eStore(storeNo) references Store(StoreNo) on delete set null);
+
+create table refund(
+	ServiceId int(7) primary key,
+	Amount float(5, 2),
+	Cust varchar(25),
+	Emp int(9),
+	foreign key fk_cust(Cust) references customer(Uname) on delete cascade,
+	foreign key fk_emp(Emp) references employee(empID) on delete cascade);
  
 
  
